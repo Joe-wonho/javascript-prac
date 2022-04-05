@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel index.html",         
+    "dev": "parcel index.html",
     "build": "parcel build index.html"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "lodash": "^4.17.21"
   }
 }
