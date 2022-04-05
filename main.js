@@ -76,7 +76,7 @@
 import axios from 'axios';
 function fetchMovies() {
   axios.get('https://www.omdbapi.com/?apikey=7035c60c&s=frozen').then((res) => {
-    console.log(res);
+    // console.log(res);
     const h1El = document.querySelector('h1');
     const imgEl = document.querySelector('img');
     h1El.textContent = res.data.Search[0].Title;
@@ -84,3 +84,63 @@ function fetchMovies() {
   });
 }
 fetchMovies();
+
+//정규표현식 사용하기
+const str2 = `
+010-1234-5678
+tonethe@gmail.com
+https://www.omdbapi.com/?apikey=7035c60c&s=frozen
+The quick brown fox jumps over the lazy dog.
+abbcccdddd
+http://local.com
+`;
+//생성자 함수 방식
+const regexp1 = new RegExp('the', 'gi'); //g플래그는 the라는 단어를 모두 찾아서 배열로 만들어줌
+//i플래그는 대소문자 구분없이 모두 찾을 때 사용
+console.log(str2.match(regexp1));
+
+//리터럴 방식
+const regexp2 = /the/gi;
+const regexp3 = /fox/gi;
+const regexp4 = /wonho/gi;
+//match 메소드
+console.log(str2.match(regexp2));
+//test 메소드
+console.log(regexp3.test(str2));
+console.log(regexp4.test(str2));
+//replace 메소드
+console.log(str2.replace(regexp3, 'AAA'));
+console.log(str2);
+
+//플래그 연습
+console.log('************플래그 연습**************');
+console.log(str2.match(/the/gi)); //정규식에 별다른 플래그(옵션)가 없다면 최초 the만 찾아서 반환한다.
+console.log(str2.match(/\.$/gim)); // \(이스케이프 문자)는 정규 표현식에서 특정 기호가 특정 기능을 할 경우 일반적인 문자로 해석하기 위해 붙여준다
+// ./$ 에서 $는 .(마침표)가 str2의 문장 끝부분에 있는지 여부를 알기 위해 사용된다. 이때 str2는 `기호 앞이 끝이므로 마침표가 없으므로 null이 나오고 플래그로 m을 써주면 str2의 각각의 줄에서 마침표로 끝나는 부분이 있는지 여부를 알려준다
+
+//정규식 표현 연습
+console.log('***********패턴 연습************');
+console.log(str2.match(/d$/gm));
+console.log(str2.match(/^t/gim));
+console.log(str2.match(/./g)); //.은 어떠한 글자도 올 수 있다.
+console.log(str2.match(/h..p/g)); //hxxp , x엔 어떠한 문자도 올 수 있다.
+console.log(str2.match(/https?/g)); //http까지 찾고 ?앞의 문자 s 는 있을 수도 없을 수 도 있다..
+console.log(str2.match(/d{2}/g)); //d가 두번 반복되는 부분 찾아서 반환
+console.log(str2.match(/d{2,}/g));
+console.log(str2.match(/d{2,3}/g));
+console.log(str2.match(/\w{2,3}/g)); // \w 이 부분은 숫자 포함 영어 알파벳을 의미 하는 부분임,(2글자 이상 3글자 이하의 부분을 찾는 것)
+console.log(str2.match(/\b\w{2,3}\b/g)); //  \b~\b 로 감싸면 특수문자를 경계로 해줌
+console.log('[]구간 사이의 문자 찾기 연습');
+console.log(str2.match(/[fox]/g)); // f o x 가 있는 모든 문자 반환
+console.log(str2.match(/[0-9]/g));
+console.log(str2.match(/[0-9]{1,}/g));
+console.log(str2.match(/\bf\w{1,}\b/g)); //f로 시작하는 단어 찾기
+
+//공백을 없애서 출력하는 방법
+const h = `  the hello  world !
+  
+`;
+console.log(h.replace(/\s/g, ''));
+
+console.log(str2.match(/.{1,}(?=@)/g)); //@앞쪽을 .{1,} 조건으로 해서 추출하면 @ 앞만 나옴
+console.log(str2.match(/(?<=@).{1,}/g)); //@뒤쪽을 .{1,} 조건으로 해서 추출하면 @ 뒤만 나옴
